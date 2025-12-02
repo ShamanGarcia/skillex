@@ -1,0 +1,484 @@
+a<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>skillEX – Create Listing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #00274c;      /* Michigan blue */
+      --primary-light: #e5edf4;
+      --accent: #ffcb05;       /* Maize */
+      --accent-soft: #fff6cf;
+
+      --dark: #111827;
+      --text: #3f4a5a;
+      --bg: #f3f5fb;
+      --card-bg: #ffffff;
+      --border: #d3d9e3;
+      --radius-lg: 20px;
+      --radius-sm: 10px;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
+      --spacing: 16px;
+      --max-width: 1100px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--primary);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    }
+
+    .navbar-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px var(--spacing);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      color: var(--accent);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo::before {
+      content: "M";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav-link {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: transparent;
+      color: #e5efff;
+      opacity: 0.9;
+      transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 203, 5, 0.18);
+      border-color: rgba(255, 203, 5, 0.65);
+      opacity: 1;
+    }
+
+    .nav-link.primary {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+      font-weight: 700;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+    }
+
+    /* LAYOUT */
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px var(--spacing) 40px;
+    }
+
+    .page-header {
+      margin-bottom: 20px;
+    }
+
+    .page-title {
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 1.8rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .page-title-badge {
+      font-size: 0.8rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--primary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .page-subtitle {
+      font-size: 0.95rem;
+      color: #6b7280;
+      margin-top: 6px;
+      max-width: 40rem;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 20px 20px 22px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+      gap: 22px;
+    }
+
+    @media (max-width: 900px) {
+      .form-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-section h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-section h2 span.icon {
+      font-size: 1.15rem;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 4px;
+    }
+
+    .field label span.hint {
+      font-weight: 400;
+      color: #6b7280;
+      font-size: 0.8rem;
+      margin-left: 6px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: #111827;
+      background: #f9fafb;
+      outline: none;
+      transition: border-color 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(255, 203, 5, 0.5);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .inline-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .inline-row {
+        flex-direction: column;
+      }
+    }
+
+    .pill-toggle-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .pill-toggle {
+      flex: 1;
+      text-align: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: #f9fafb;
+      color: #374151;
+      user-select: none;
+    }
+
+    .pill-toggle.active {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .credits-input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .credits-input input[type="number"] {
+      max-width: 80px;
+      text-align: center;
+    }
+
+    .credits-helper {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .submit-row {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 18px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.24);
+      border: 1px solid rgba(202, 138, 4, 0.9);
+    }
+
+    .btn-primary:hover {
+      background: #ffd633;
+    }
+
+    .btn-secondary {
+      background: #f9fafb;
+      color: var(--primary);
+      border: 1px solid rgba(148, 163, 184, 0.9);
+    }
+
+    .submit-note {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .tips-card {
+      background: #0b1830;
+      color: #e5efff;
+      border-radius: 18px;
+      padding: 16px 16px 18px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    .tips-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .tips-card ul {
+      font-size: 0.84rem;
+      list-style: disc;
+      padding-left: 18px;
+      color: #cbd5f5;
+    }
+
+    .tips-card li + li {
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">skillEX</a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="explore.html" class="nav-link">Explore</a>
+        <a href="create.html" class="nav-link primary">Create Listing</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <header class="page-header">
+      <h1 class="page-title">
+        Create a new listing
+        <span class="page-title-badge">Spend Credits • Get Community Help</span>
+      </h1>
+      <p class="page-subtitle">
+        Describe what you need help with, how long it will take, and how many credits you can offer.
+      </p>
+    </header>
+
+    <section class="form-card">
+      <!-- LEFT: Main Form -->
+      <div class="form-section">
+        <h2><span class="icon">📝</span> Listing details</h2>
+
+        <div class="field">
+          <label for="title">Title <span class="hint">Keep it short & clear</span></label>
+          <input id="title" type="text" placeholder="e.g., Beginner guitar lesson near Central Campus" />
+        </div>
+
+        <div class="field">
+          <label for="description">Description <span class="hint">What do you need? What should people expect?</span></label>
+          <textarea id="description" placeholder="Share specifics: what is needed, and any details about timing or location."></textarea>
+        </div>
+
+        <div class="inline-row">
+          <div class="field" style="flex:1;">
+            <label for="category">Category</label>
+            <select id="category">
+              <option value="">Choose a category</option>
+              <option>Cooking</option>
+              <option>Fixing</option>
+              <option>Clothing</option>
+              <option>Educating</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field" style="flex:1;">
+            <label for="time">Estimated time</label>
+            <select id="time">
+              <option value="">Select time</option>
+              <option>30–60 minutes</option>
+              <option>1–2 hours</option>
+              <option>2–3 hours</option>
+              <option>Half day</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Credits</label>
+          <div class="credits-input">
+            <input type="number" min="1" max="10" value="6" />
+            <span class="credits-helper">Most listings are between 5–10 credits.</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="location">Location <span class="hint">Neighborhood, city, or “Online”</span></label>
+          <input id="location" type="text" placeholder="e.g., Kerrytown • Ann Arbor, or Online" />
+        </div>
+
+        <div class="field">
+          <label>How will this happen?</label>
+          <div class="pill-toggle-group">
+            <div class="pill-toggle active">In person</div>
+            <div class="pill-toggle">Online</div>
+            <div class="pill-toggle">Either</div>
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <button class="btn btn-primary" type="button">Publish listing</button>
+          <button class="btn btn-secondary" type="button">Save as draft</button>
+          <p class="submit-note">
+            Your listing will be visible to people nearby and across Michigan. You can edit it anytime.
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT: Tips / Context -->
+      <aside class="form-section">
+        <h2><span class="icon">💡</span> Tips for a strong listing</h2>
+        <div class="tips-card">
+          <h3>Make it clear and local</h3>
+          <ul>
+            <li>Mention neighborhoods or landmarks (e.g., “near Diag”, “Ypsi, Depot Town”).</li>
+            <li>Be specific about what’s included and what isn’t.</li>
+            <li>Set a realistic time estimate so people know what to expect.</li>
+            <li>Use credits to roughly match the effort it will require.</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>
