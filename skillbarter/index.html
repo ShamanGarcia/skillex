@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>skillEX – Skill Barter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Michigan-ish typography (Nunito Sans + Montserrat) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Michigan Blue + Maize */
+      --primary: #00274c;      /* Michigan blue */
+      --primary-light: #e5edf4;
+      --accent: #ffcb05;       /* Maize */
+      --accent-soft: #fff6cf;
+
+      --dark: #111827;
+      --text: #3f4a5a;
+      --bg: #f3f5fb;
+      --card-bg: #ffffff;
+      --border: #d3d9e3;
+      --radius-lg: 20px;
+      --radius-sm: 10px;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
+      --spacing: 16px;
+      --max-width: 1100px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--primary);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    }
+
+    .navbar-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px var(--spacing);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      color: var(--accent);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo::before {
+      content: "M";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav-link {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: transparent;
+      color: #e5efff;
+      opacity: 0.9;
+      transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 203, 5, 0.18);
+      border-color: rgba(255, 203, 5, 0.65);
+      opacity: 1;
+    }
+
+    .nav-link.primary {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+      font-weight: 700;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+    }
+
+    .nav-link.primary:hover {
+      background: #ffd633;
+    }
+
+    /* LAYOUT */
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px var(--spacing) 40px;
+    }
+
+    /* HERO / MAIN SEARCH AREA */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 32px;
+      margin-bottom: 32px;
+      align-items: stretch;
+      padding: 28px;
+      border-radius: 28px;
+      background: radial-gradient(circle at top left, #003a73 0%, #00274c 40%, #011425 100%);
+      box-shadow: var(--shadow-soft);
+      color: #e5efff;
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 22px;
+      }
+    }
+
+    .hero-text h1 {
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+
+    .hero-text p {
+      font-size: 0.98rem;
+      color: #d5e3ff;
+      margin-bottom: 18px;
+      max-width: 34rem;
+    }
+
+    .hero-text p span {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .search-container {
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 6px 6px 6px 14px;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.18);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid rgba(15, 23, 42, 0.25);
+      max-width: 32rem;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      font-size: 0.95rem;
+      padding: 8px 10px;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #9ca3af;
+    }
+
+    .search-button {
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      background: var(--accent);
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+
+    .search-button:hover {
+      background: #ffd633;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.26);
+    }
+
+    .hero-side {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 20px;
+      padding: 18px 18px 20px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
+      font-size: 0.9rem;
+      color: #4b5563;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+    }
+
+    .hero-side h2 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .hero-side ul {
+      margin-top: 10px;
+      padding-left: 18px;
+      list-style: disc;
+    }
+
+    .hero-side li {
+      margin-bottom: 4px;
+    }
+
+    /* FILTERS + LISTINGS */
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .filter-chip {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: #fff;
+      color: #4b5563;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease, transform 0.08s ease;
+    }
+
+    .filter-chip::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #cbd5e1;
+    }
+
+    .filter-chip[data-filter="cooking"]::before {
+      background: #fb923c;
+    }
+    .filter-chip[data-filter="fixing"]::before {
+      background: #22c55e;
+    }
+    .filter-chip[data-filter="clothing"]::before {
+      background: #ec4899;
+    }
+    .filter-chip[data-filter="educating"]::before {
+      background: #38bdf8;
+    }
+    .filter-chip[data-filter="other"]::before {
+      background: #a855f7;
+    }
+
+    .filter-chip.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--primary);
+      font-weight: 700;
+      transform: translateY(-1px);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: 1.2rem;
+      color: var(--primary);
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+      font-weight: 700;
+    }
+
+    .section-header span {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    .listing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .listing-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 14px 14px 16px;
+      box-shadow: 0 12px 26px rgba(148, 163, 184, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .listing-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 3px solid transparent;
+      pointer-events: none;
+      transition: border-color 0.12s ease, box-shadow 0.12s ease, transform 0.12s ease;
+    }
+
+    .listing-card:hover::after {
+      border-color: rgba(255, 203, 5, 0.9);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+      transform: translateY(-1px);
+    }
+
+    .listing-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .listing-meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .listing-price {
+      margin-top: 4px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .listing-price::before {
+      content: "◎";
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    .badge-category {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: var(--accent-soft);
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* EXPLORE SECTION */
+
+    .explore-section {
+      padding-top: 24px;
+      border-top: 1px solid rgba(148, 163, 184, 0.7);
+      margin-top: 8px;
+    }
+
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .explore-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 10px;
+      box-shadow: 0 12px 26px rgba(148, 163, 184, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: center;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .explore-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.22), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      pointer-events: none;
+    }
+
+    .explore-card:hover::before {
+      opacity: 1;
+    }
+
+    .explore-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius-sm);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin-bottom: 6px;
+    }
+
+    .explore-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .explore-price {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* PLACEHOLDER SECTIONS (CREATE LISTING / PROFILE) */
+
+    .placeholder-section {
+      margin-top: 32px;
+      padding: 18px 18px 20px;
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+      box-shadow: 0 12px 26px rgba(148, 163, 184, 0.35);
+      font-size: 0.9rem;
+      color: #4b5563;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    .placeholder-section h2 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .placeholder-section p {
+      max-width: 42rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="logo">skillEX</div>
+      <nav class="nav-links">
+        <a href="message.html" class="nav-link">Messages</a>
+        <a href="create.html" class="nav-link">Create Listing</a>
+        <a href="explore.html" class="nav-link">Explore</a>
+        <a href="profile.html" class="nav-link primary">Your Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- HERO / MAIN AREA -->
+    <section class="hero" id="home">
+      <div class="hero-text">
+        <h1>Trade skills across Michigan.</h1>
+        <p>
+          Find neighbors accross the <span>Ann Arbor</span>campus and beyond
+          who are ready to swap their skills for credits — no cash, just community.
+        </p>
+
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="What do you need help with? (e.g., 'snow shoveling in Kerrytown', 'bike repair', 'tutoring')"
+          />
+          <button class="search-button">Search</button>
+        </div>
+      </div>
+
+      <aside class="hero-side">
+        <h2>How skillEX works</h2>
+        <p>Post what you need done, browse tasks from others, and complete them to earn credits. Use those credits to get help with your own projects—no cash required.</p>
+        <ul>
+          <li>Browse local swaps around campus and across the University of Michigan campus.</li>
+          <li>Earn credits by helping with everyday tasks.</li>
+          <li>Spend credits on things you need — from tutoring to home repairs.</li>
+          <li>Strengthen your sense of community through mutual aid and shared experiences.</li>
+
+        </ul>
+      </aside>
+    </section>
+
+    <!-- FILTERS + LISTINGS -->
+    <section>
+      <div class="section-header">
+        <h2>Current Listings near you</h2>
+        <span>Sort by category</span>
+      </div>
+
+      <div class="filters">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="cooking">Cooking</button>
+        <button class="filter-chip" data-filter="fixing">Fixing</button>
+        <button class="filter-chip" data-filter="clothing">Clothing</button>
+        <button class="filter-chip" data-filter="educating">Educating</button>
+        <button class="filter-chip" data-filter="other">Other</button>
+      </div>
+
+      <div class="listing-grid" id="listingGrid">
+        <!-- Example listings -->
+        <article class="listing-card" data-category="cooking">
+          <div class="listing-title">Help with weekly meal prep (Ann Arbor)</div>
+          <div class="listing-meta">
+            <span class="badge-category">Cooking</span> • 2–3 hours
+          </div>
+          <div class="listing-price">9 credits</div>
+        </article>
+
+        <article class="listing-card" data-category="fixing">
+          <div class="listing-title">Fix squeaky bike brakes near campus</div>
+          <div class="listing-meta">
+            <span class="badge-category">Fixing</span> • 1 hour
+          </div>
+          <div class="listing-price">8 credits</div>
+        </article>
+
+        <article class="listing-card" data-category="clothing">
+          <div class="listing-title">Hem a pair of jeans (Kerrytown)</div>
+          <div class="listing-meta">
+            <span class="badge-category">Clothing</span> • Simple sewing
+          </div>
+          <div class="listing-price">5 credits</div>
+        </article>
+
+        <article class="listing-card" data-category="educating">
+          <div class="listing-title">Intro to RStudio tutoring for grad students</div>
+          <div class="listing-meta">
+            <span class="badge-category">Educating</span> • 1-on-1, online
+          </div>
+          <div class="listing-price">5 credits</div>
+        </article>
+
+        <article class="listing-card" data-category="other">
+          <div class="listing-title">Help organizing small closet before winter</div>
+          <div class="listing-meta">
+            <span class="badge-category">Other</span> • In person
+          </div>
+          <div class="listing-price">7 credits</div>
+        </article>
+
+        <article class="listing-card" data-category="cooking">
+          <div class="listing-title">Teach basics of sourdough baking</div>
+          <div class="listing-meta">
+            <span class="badge-category">Cooking</span> • 2 hours
+          </div>
+          <div class="listing-price">9 credits</div>
+        </article>
+
+        <article class="listing-card" data-category="fixing">
+          <div class="listing-title">Assemble IKEA bookshelf in student apartment</div>
+          <div class="listing-meta">
+            <span class="badge-category">Fixing</span> • Assembly
+          </div>
+          <div class="listing-price">5 credits</div>
+        </article>
+
+        <article class="listing-card" data-category="educating">
+          <div class="listing-title">High school algebra help (Washtenaw County)</div>
+          <div class="listing-meta">
+            <span class="badge-category">Educating</span> • In person or online
+          </div>
+          <div class="listing-price">5 credits</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPLORE SECTION -->
+    <section class="explore-section" id="explore">
+      <div class="section-header">
+        <h2>Explore Tasks</h2>
+        <span>Browse tasks you could complete to earn credits</span>
+      </div>
+
+      <div class="explore-grid">
+        <!-- Images swapped for Michigan/Ann Arbor/Detroit Unsplash shots -->
+        <div class="explore-card">
+          <div class="explore-image" style="background-image: url('https://images.unsplash.com/photo-1701522621509-eZ47Ees05pY?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="explore-title">Cook a simple dinner for two</div>
+          <div class="explore-price">5 credits</div>
+        </div>
+
+        <div class="explore-card">
+          <div class="explore-image" style="background-image: url('https://images.unsplash.com/photo-1733418000420-ljnOUFtwzFA?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="explore-title">Patch a small drywall hole</div>
+          <div class="explore-price">8 credits</div>
+        </div>
+
+        <div class="explore-card">
+          <div class="explore-image" style="background-image: url('https://images.unsplash.com/photo-1703809483068-D_I-Ac0nCEY?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="explore-title">Sew a button on a shirt</div>
+          <div class="explore-price">6 credit</div>
+        </div>
+
+        <div class="explore-card">
+          <div class="explore-image" style="background-image: url('https://images.unsplash.com/photo-1615386669424-v-iS3PD7aLU?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="explore-title">Beginner guitar lesson (Detroit style)</div>
+          <div class="explore-price">7 credits</div>
+        </div>
+
+        <div class="explore-card">
+          <div class="explore-image" style="background-image: url('https://images.unsplash.com/photo-1544749032-83377800c42f-SV7cFNhEYOc?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="explore-title">Help moving small furniture</div>
+          <div class="explore-price">5 credits</div>
+        </div>
+
+        <div class="explore-card">
+          <div class="explore-image" style="background-image: url('https://images.unsplash.com/photo-1519338812566-1c0b6f12a2db-OysvG-mE10g?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="explore-title">Basic Excel walkthrough (Ann Arbor cafe)</div>
+          <div class="explore-price">8 credits</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Simple category filter for main listings
+    document.addEventListener("DOMContentLoaded", function () {
+      const filterButtons = document.querySelectorAll(".filter-chip");
+      const cards = document.querySelectorAll(".listing-card");
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const category = btn.dataset.filter;
+
+          // Toggle active button styling
+          filterButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          // Show/hide cards
+          cards.forEach((card) => {
+            const cardCat = card.dataset.category;
+            if (category === "all" || cardCat === category) {
+              card.style.display = "flex";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

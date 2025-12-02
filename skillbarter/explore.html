@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>skillEX – Explore</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Same fonts as main page -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #00274c;      /* Michigan blue */
+      --primary-light: #e5edf4;
+      --accent: #ffcb05;       /* Maize */
+      --accent-soft: #fff6cf;
+
+      --dark: #111827;
+      --text: #3f4a5a;
+      --bg: #f3f5fb;
+      --card-bg: #ffffff;
+      --border: #d3d9e3;
+      --radius-lg: 20px;
+      --radius-sm: 10px;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
+      --spacing: 16px;
+      --max-width: 1100px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* NAVBAR (same vibe as main) */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--primary);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    }
+
+    .navbar-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px var(--spacing);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      color: var(--accent);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo::before {
+      content: "M";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav-link {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: transparent;
+      color: #e5efff;
+      opacity: 0.9;
+      transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 203, 5, 0.18);
+      border-color: rgba(255, 203, 5, 0.65);
+      opacity: 1;
+    }
+
+    .nav-link.primary {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+      font-weight: 700;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+    }
+
+    /* PAGE CONTAINER */
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px var(--spacing) 40px;
+    }
+
+    .page-header {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .page-title {
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 1.8rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-title span {
+      font-size: 0.9rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .page-subtitle {
+      font-size: 0.95rem;
+      color: #6b7280;
+      max-width: 40rem;
+    }
+
+    /* TOGGLE SWITCH: Tasks / Community */
+
+    .view-toggle {
+      margin: 18px 0 24px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 4px;
+      box-shadow: 0 6px 16px rgba(148, 163, 184, 0.45);
+    }
+
+    .toggle-button {
+      border: none;
+      background: transparent;
+      font-size: 0.88rem;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #4b5563;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    }
+
+    .toggle-button span.icon {
+      font-size: 1rem;
+    }
+
+    .toggle-button.active {
+      background: var(--accent);
+      color: var(--primary);
+      font-weight: 700;
+      transform: translateY(-1px);
+    }
+
+    /* GRID LAYOUT SHARED */
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    /* TASK CARDS */
+
+    .task-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 14px 14px 16px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .task-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .task-meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .task-meta span {
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .task-location {
+      font-size: 0.8rem;
+      color: #4b5563;
+    }
+
+    .task-credits {
+      margin-top: 6px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .task-credits::before {
+      content: "◎";
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    /* COMMUNITY CARDS */
+
+    .community-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 14px 14px 16px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .community-type {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .community-type.badge-thank {
+      color: #16a34a;
+    }
+
+    .community-type.badge-event {
+      color: #2563eb;
+    }
+
+    .community-type::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .community-message {
+      font-size: 0.92rem;
+      color: var(--dark);
+    }
+
+    .community-meta {
+      font-size: 0.78rem;
+      color: #6b7280;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 10px;
+    }
+
+    .community-tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* SECTIONS VISIBILITY */
+
+   /* SECTIONS VISIBILITY */
+
+    #tasksView,
+    #communityView {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+
+    #tasksView.active,
+    #communityView.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* SMALL SCREEN TWEAKS */
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 1.45rem;
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">skillEX</a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="explore.html" class="nav-link">Explore</a>
+        <a href="create.html" class="nav-link">Create Listing</a>
+        <a href="profile.html" class="nav-link primary">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <header class="page-header">
+      <div class="page-title">
+        Explore
+        <span>Michigan neighbors & skill swaps</span>
+      </div>
+      <p class="page-subtitle">
+        Switch between open tasks you can complete for credits and the community board
+        where people share thanks and post local events.
+      </p>
+    </header>
+
+    <!-- VIEW TOGGLE -->
+    <div class="view-toggle" role="tablist" aria-label="Explore view toggle">
+      <button
+        class="toggle-button active"
+        id="tasksToggle"
+        role="tab"
+        aria-selected="true"
+        aria-controls="tasksView"
+      >
+        <span class="icon">🛠️</span> Tasks
+      </button>
+      <button
+        class="toggle-button"
+        id="communityToggle"
+        role="tab"
+        aria-selected="false"
+        aria-controls="communityView"
+      >
+        <span class="icon">🏙️</span> Community
+      </button>
+    </div>
+
+    <!-- TASKS VIEW -->
+    <section id="tasksView" class="active" role="tabpanel" aria-labelledby="tasksToggle">
+      <div class="grid">
+        <article class="task-card">
+          <div class="task-title">Shovel driveway after snowfall</div>
+          <div class="task-meta">
+            <span>⏱️ 1–2 hours</span>
+            <span>🏠 Ann Arbor (Old West Side)</span>
+          </div>
+          <div class="task-location">Preferred time: early morning before 9am</div>
+          <div class="task-credits">4 credits</div>
+        </article>
+
+        <article class="task-card">
+          <div class="task-title">Tune up commuter bike</div>
+          <div class="task-meta">
+            <span>⏱️ 1 hour</span>
+            <span>🚲 Near Central Campus</span>
+          </div>
+          <div class="task-location">Brake check, tire inflation, chain lube</div>
+          <div class="task-credits">3 credits</div>
+        </article>
+
+        <article class="task-card">
+          <div class="task-title">Help with basic Python homework</div>
+          <div class="task-meta">
+            <span>⏱️ 45–60 minutes</span>
+            <span>💻 Online</span>
+          </div>
+          <div class="task-location">Intro CS student at Washtenaw Community College</div>
+          <div class="task-credits">3 credits</div>
+        </article>
+
+        <article class="task-card">
+          <div class="task-title">Meal prep for the week (vegetarian)</div>
+          <div class="task-meta">
+            <span>⏱️ 2–3 hours</span>
+            <span>🏠 Ypsilanti</span>
+          </div>
+          <div class="task-location">Simple lunches + dinners, ingredients provided</div>
+          <div class="task-credits">4 credits</div>
+        </article>
+
+        <article class="task-card">
+          <div class="task-title">Organize closet & donate clothes</div>
+          <div class="task-meta">
+            <span>⏱️ 2 hours</span>
+            <span>🏠 Ann Arbor (Kerrytown)</span>
+          </div>
+          <div class="task-location">Help sorting & boxing clothes to drop at a local shelter</div>
+          <div class="task-credits">3 credits</div>
+        </article>
+
+        <article class="task-card">
+          <div class="task-title">Beginner guitar lesson</div>
+          <div class="task-meta">
+            <span>⏱️ 1 hour</span>
+            <span>🎸 In-person near campus</span>
+          </div>
+          <div class="task-location">Learn basic chords and one simple song</div>
+          <div class="task-credits">4 credits</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- COMMUNITY VIEW -->
+    <section id="communityView" role="tabpanel" aria-labelledby="communityToggle">
+      <div class="grid">
+        <!-- Thank-you posts -->
+        <article class="community-card">
+          <div class="community-type badge-thank">
+            🙌 Thank You
+          </div>
+          <p class="community-message">
+            Huge thanks to <strong>Jordan</strong> for helping shovel our driveway after the
+            last snowstorm. You saved us so much time before work — Go Blue!
+          </p>
+          <div class="community-meta">
+            <span>📍 Burns Park, Ann Arbor</span>
+            <span>🕒 Posted 2 days ago</span>
+            <span class="community-tag">Snow shoveling</span>
+          </div>
+        </article>
+
+        <article class="community-card">
+          <div class="community-type badge-thank">
+            🙌 Thank You
+          </div>
+          <p class="community-message">
+            Shoutout to <strong>Maya</strong> for patiently walking me through RStudio basics
+            for my grad stats class. Couldn’t have done that assignment without you.
+          </p>
+          <div class="community-meta">
+            <span>💻 Online</span>
+            <span>🕒 Posted 4 days ago</span>
+            <span class="community-tag">Tutoring</span>
+          </div>
+        </article>
+
+        <!-- Events -->
+        <article class="community-card">
+          <div class="community-type badge-event">
+            🎵 Event • Local Band Show
+          </div>
+          <p class="community-message">
+            <strong>Ann Arbor Basement Bands Night</strong> – three student bands, $5 suggested
+            donation, all ages welcome. Bring earplugs and friends!
+          </p>
+          <div class="community-meta">
+            <span>📍 Near Packard & State</span>
+            <span>📅 Friday • 8:00–11:00pm</span>
+            <span class="community-tag">Live music</span>
+          </div>
+        </article>
+
+        <article class="community-card">
+          <div class="community-type badge-event">
+            👕 Event • Clothing Swap
+          </div>
+          <p class="community-message">
+            <strong>Campus Clothing Swap</strong> – trade gently used jackets, sweaters, and
+            jeans. No money, just swaps. Extra donations go to a local shelter.
+          </p>
+          <div class="community-meta">
+            <span>📍 Trotter Multicultural Center</span>
+            <span>📅 Saturday • 1:00–4:00pm</span>
+            <span class="community-tag">Clothing swap</span>
+          </div>
+        </article>
+
+        <article class="community-card">
+          <div class="community-type badge-event">
+            🥫 Event • Food Drive
+          </div>
+          <p class="community-message">
+            <strong>Washtenaw County Fall Food Drive</strong> – drop off non-perishable items
+            or sign up on skillEX to help transport donations.
+          </p>
+          <div class="community-meta">
+            <span>📍 Multiple campus drop-off spots</span>
+            <span>📅 All week</span>
+            <span class="community-tag">Food drive</span>
+          </div>
+        </article>
+
+        <article class="community-card">
+          <div class="community-type badge-thank">
+            🙌 Thank You
+          </div>
+          <p class="community-message">
+            Thanks to <strong>Sam</strong> for assembling our IKEA bookshelves in the
+            co-op house. The living room finally looks put together.
+          </p>
+          <div class="community-meta">
+            <span>📍 Co-op near North Campus</span>
+            <span>🕒 Posted 1 week ago</span>
+            <span class="community-tag">Furniture assembly</span>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Toggle between Tasks and Community views
+    document.addEventListener("DOMContentLoaded", function () {
+      const tasksToggle = document.getElementById("tasksToggle");
+      const communityToggle = document.getElementById("communityToggle");
+      const tasksView = document.getElementById("tasksView");
+      const communityView = document.getElementById("communityView");
+
+      function setView(view) {
+        if (view === "tasks") {
+          tasksToggle.classList.add("active");
+          tasksToggle.setAttribute("aria-selected", "true");
+          communityToggle.classList.remove("active");
+          communityToggle.setAttribute("aria-selected", "false");
+
+          tasksView.classList.add("active");
+          communityView.classList.remove("active");
+        } else {
+          communityToggle.classList.add("active");
+          communityToggle.setAttribute("aria-selected", "true");
+          tasksToggle.classList.remove("active");
+          tasksToggle.setAttribute("aria-selected", "false");
+
+          communityView.classList.add("active");
+          tasksView.classList.remove("active");
+        }
+      }
+
+      tasksToggle.addEventListener("click", () => setView("tasks"));
+      communityToggle.addEventListener("click", () => setView("community"));
+    });
+  </script>
+</body>
+</html>

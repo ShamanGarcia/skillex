@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>skillEX – Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Michigan-ish typography (Nunito Sans + Montserrat) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Michigan Blue + Maize */
+      --primary: #00274c;      /* Michigan blue */
+      --primary-light: #e5edf4;
+      --accent: #ffcb05;       /* Maize */
+      --accent-soft: #fff6cf;
+
+      --dark: #111827;
+      --text: #3f4a5a;
+      --bg: #f3f5fb;
+      --card-bg: #ffffff;
+      --border: #d3d9e3;
+      --radius-lg: 20px;
+      --radius-sm: 10px;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
+      --spacing: 16px;
+      --max-width: 1100px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--primary);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    }
+
+    .navbar-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px var(--spacing);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      color: var(--accent);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo::before {
+      content: "M";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav-link {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: transparent;
+      color: #e5efff;
+      opacity: 0.9;
+      transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 203, 5, 0.18);
+      border-color: rgba(255, 203, 5, 0.65);
+      opacity: 1;
+    }
+
+    .nav-link.primary {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+      font-weight: 700;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+    }
+
+    /* LAYOUT */
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px var(--spacing) 40px;
+    }
+
+    /* PROFILE HEADER / HERO */
+
+    .profile-hero {
+      background: radial-gradient(circle at top left, #003a73 0%, #00274c 40%, #011425 100%);
+      border-radius: 28px;
+      padding: 24px 24px 26px;
+      box-shadow: var(--shadow-soft);
+      color: #e5efff;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+
+    @media (max-width: 720px) {
+      .profile-hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .profile-avatar-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffd84f, #ffcb05 40%, #fbbf24 70%);
+      border: 4px solid rgba(255,255,255,0.9);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-avatar {
+      object-fit: cover;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid rgba(255,255,255,0.9);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.35);
+    }
+
+    .profile-hero-main {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .profile-name {
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 1.8rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .profile-badge {
+      font-size: 0.78rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(255, 203, 5, 0.12);
+      border: 1px solid rgba(255, 203, 5, 0.7);
+      color: #fef9c3;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .profile-location {
+      font-size: 0.92rem;
+      color: #d5e3ff;
+    }
+
+    .profile-tagline {
+      font-size: 0.9rem;
+      color: #e5efff;
+      max-width: 30rem;
+    }
+
+    .profile-stats-row {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .profile-stat {
+      min-width: 120px;
+      padding: 8px 12px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    .profile-stat-value {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fefce8;
+    }
+
+    .profile-stat-label {
+      display: block;
+      font-size: 0.8rem;
+      color: #cbd5f5;
+    }
+
+    /* MAIN CONTENT GRID */
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 18px 18px 20px;
+      box-shadow: 0 12px 26px rgba(148, 163, 184, 0.35);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .card h2 span.icon {
+      font-size: 1.1rem;
+    }
+
+    .skills-list,
+    .tasks-list,
+    .reviews-list {
+      list-style: none;
+      margin-top: 4px;
+    }
+
+    .skills-list li,
+    .tasks-list li,
+    .reviews-list li {
+      font-size: 0.9rem;
+      color: #4b5563;
+      padding: 6px 0;
+      border-bottom: 1px dashed rgba(209, 213, 219, 0.9);
+    }
+
+    .skills-list li:last-child,
+    .tasks-list li:last-child,
+    .reviews-list li:last-child {
+      border-bottom: none;
+    }
+
+    .skill-tagline {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .review-author {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .credits-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .credits-balance {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .credits-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .credits-label {
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .credits-sub {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .credits-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 7px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.24);
+      border: 1px solid rgba(202, 138, 4, 0.9);
+    }
+
+    .btn-primary:hover {
+      background: #ffd633;
+    }
+
+    .btn-ghost {
+      background: #f9fafb;
+      color: var(--primary);
+      border: 1px solid rgba(148, 163, 184, 0.9);
+    }
+
+    .badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--accent-soft);
+      color: var(--primary);
+      margin-top: 4px;
+    }
+
+    .badge-chip span {
+      font-size: 0.9rem;
+    }
+
+    .meta-row {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #6b7280;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">skillEX</a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="explore.html" class="nav-link">Explore</a>
+        <a href="create.html" class="nav-link">Create Listing</a>
+        <a href="profile.html" class="nav-link primary">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- PROFILE HERO -->
+    <section class="profile-hero">
+      <div class="profile-avatar-wrap">
+        <!-- Placeholder Michigan-style avatar -->
+          <img src="images/profile.png" class="profile-avatar" alt="Profile photo" />
+      </div>
+
+      <div class="profile-hero-main">
+        <div>
+          <h1 class="profile-name">
+            Shaman Garcia
+            <span class="profile-badge">Miller Neighborhood</span>
+          </h1>
+          <p class="profile-location">Ann Arbor, Michigan • Near Central Campus</p>
+        </div>
+        <p class="profile-tagline">
+          Trading bike repair, data help, and meal prep for credits. Grad student trying
+          to keep life (and chains) running smoothly.
+        </p>
+
+        <div class="profile-stats-row">
+          <div class="profile-stat">
+            <span class="profile-stat-value">14</span>
+            <span class="profile-stat-label">Credits available</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-value">8</span>
+            <span class="profile-stat-label">Tasks completed</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-value">4.9★</span>
+            <span class="profile-stat-label">Average rating</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN PROFILE CONTENT -->
+    <section class="profile-grid">
+      <!-- LEFT COLUMN: Skills + Active Tasks -->
+      <div class="card">
+        <h2><span class="icon">🧰</span> Skills You Offer</h2>
+        <ul class="skills-list">
+          <li>
+            Bike Repair & Tune-ups
+            <div class="skill-tagline">Fixing flats, adjusting brakes, basic maintenance.</div>
+          </li>
+          <li>
+            Data & RStudio Help
+            <div class="skill-tagline">Intro R, simple visualizations, troubleshooting scripts.</div>
+          </li>
+          <li>
+            Meal Prep (Vegetarian)
+            <div class="skill-tagline">Batch-cooking simple, budget-friendly meals.</div>
+          </li>
+        </ul>
+
+        <h2 style="margin-top: 18px;"><span class="icon">📋</span> Active Tasks</h2>
+        <ul class="tasks-list">
+          <li>
+            Meal prep help for Taylor — Friday evening
+            <div class="skill-tagline">Ypsilanti • 2–3 hours • 4 credits</div>
+          </li>
+          <li>
+            Organizing closet for Morgan — next Tuesday
+            <div class="skill-tagline">Kerrytown • 2 hours • 3 credits</div>
+          </li>
+          <li>
+            Bike tune-up for Alex — this weekend
+            <div class="skill-tagline">Near North Campus • 1 hour • 3 credits</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- RIGHT COLUMN: Credits + Reviews -->
+      <div class="card credits-card">
+        <div>
+          <h2><span class="icon">◎</span> Credits & Reputation</h2>
+          <div class="credits-balance">
+            <span class="credits-value">14</span>
+            <span class="credits-label">credits available</span>
+          </div>
+          <p class="credits-sub">
+            Earn more credits by completing tasks, then spend them on help with your own projects.
+          </p>
+          <div class="credits-actions">
+            <button class="btn btn-primary">Find tasks</button>
+            <button class="btn btn-ghost">Create a listing</button>
+          </div>
+          <div class="badge-chip">
+            <span>〽️</span> Verified Michigan user
+          </div>
+        </div>
+
+        <div>
+          <h2 style="margin-top: 8px;"><span class="icon">⭐</span> Recent Reviews</h2>
+          <ul class="reviews-list">
+            <li>
+              “Super helpful fixing my brakes! Explained what they were doing so I can
+              tune it myself next time.”
+              <div class="review-author">— Alex • Bike repair</div>
+            </li>
+            <li>
+              “Amazing tutor — very patient and broke down RStudio in a way that actually
+              made sense.”
+              <div class="review-author">— Jamie • RStudio help</div>
+            </li>
+            <li>
+              “Meals were tasty, organized, and labeled for the week. Huge relief during
+              finals.”
+              <div class="review-author">— Priya • Meal prep</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="meta-row">
+          <span>Member since 2025</span>
+          <span>Last active: today</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
