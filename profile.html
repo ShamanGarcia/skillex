@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8" />
   <title>skillEX – Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,121 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      /* Michigan Blue + Maize */
-      --primary: #00274c;      /* Michigan blue */
-      --primary-light: #e5edf4;
-      --accent: #ffcb05;       /* Maize */
-      --accent-soft: #fff6cf;
-
-      --dark: #111827;
-      --text: #3f4a5a;
-      --bg: #f3f5fb;
-      --card-bg: #ffffff;
-      --border: #d3d9e3;
-      --radius-lg: 20px;
-      --radius-sm: 10px;
-      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
-      --spacing: 16px;
-      --max-width: 1100px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* NAVBAR */
-
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--primary);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
-    }
-
-    .navbar-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 10px var(--spacing);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      font-family: "Montserrat", system-ui, sans-serif;
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: 0.09em;
-      color: var(--accent);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .logo::before {
-      content: "M";
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      border-radius: 4px;
-      background: var(--accent);
-      color: var(--primary);
-      font-size: 0.9rem;
-      font-weight: 800;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .nav-link {
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      border: 1px solid transparent;
-      cursor: pointer;
-      background: transparent;
-      color: #e5efff;
-      opacity: 0.9;
-      transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
-    }
-
-    .nav-link:hover {
-      background: rgba(255, 203, 5, 0.18);
-      border-color: rgba(255, 203, 5, 0.65);
-      opacity: 1;
-    }
-
-    .nav-link.primary {
-      background: var(--accent);
-      color: var(--primary);
-      border-color: var(--accent);
-      font-weight: 700;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
-    }
 
     /* LAYOUT */
 
@@ -421,10 +306,14 @@
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="navbar-inner">
-      <a href="index.html" class="logo">skillEX</a>
+      <a href="index.html" class="logo">
+        <span class="logo-text logo-text-desktop">skillEX</span>
+        <span class="logo-text logo-text-mobile">MX</span>
+      </a>
       <nav class="nav-links">
         <a href="index.html" class="nav-link">Home</a>
         <a href="explore.html" class="nav-link">Explore</a>
+        <a href="message.html" class="nav-link">Messages</a>
         <a href="create.html" class="nav-link">Create Listing</a>
         <a href="profile.html" class="nav-link primary">Profile</a>
       </nav>
